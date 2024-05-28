@@ -42,8 +42,47 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let customArray = [0, 1, 2, 3, 4, 5, 6];
+let customArray = [10, 5, 3, 5, 2, 1, 7, 9, 10];
 let customTree = Tree(customArray);
-console.log(customTree.right);
+console.log(customTree);
 
-prettyPrint(customTree);
+console.log(prettyPrint(customTree));
+
+// inserir
+function treeInsert(newItem, treeObj) {
+  if (newItem == treeObj.data) {
+    return;
+  } else if (newItem > treeObj.data) {
+    if (treeObj.right === null) {
+      treeObj.right = Node(newItem);
+    } else {
+      treeInsert(newItem, treeObj.right);
+    }
+  } else if (newItem < treeObj.data) {
+    if (treeObj.left === null) {
+      treeObj.left = Node(newItem);
+    } else {
+      treeInsert(newItem, treeObj.left);
+    }
+  }
+}
+
+treeInsert(11, customTree);
+console.log(customTree);
+console.log(prettyPrint(customTree));
+
+//remover
+function treeRemove(removedItem, treeObj) {
+  if (removedItem == treeObj.data) {
+    if (treeObj.left === null || treeObj.right === null) {
+      treeObj = null;
+      return;
+    }
+    //tree remove logic.........
+    return;
+  } else if (newItem > treeObj.data) {
+    treeRemove(newItem, treeObj.right);
+  } else if (newItem < treeObj.data) {
+    treeRemove(newItem, treeObj.left);
+  }
+}
