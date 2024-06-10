@@ -236,6 +236,21 @@ function height(root) {
   return Math.max(leftHeight, rightHeight) + 1;
 }
 
+function depth(node, root, count = 0) {
+  if (!root) {
+    console.log("value not found");
+    return -1;
+  }
+
+  if (node === root.data) {
+    return count;
+  } else if (node > root.data) {
+    return depth(node, root.right, count + 1);
+  } else {
+    return depth(node, root.left, count + 1);
+  }
+}
+
 console.log(prettyPrint(customArray2));
 console.log(levelOrder(customArray2, null));
-console.log(height(customArray2));
+console.log(depth(1, customArray2));
