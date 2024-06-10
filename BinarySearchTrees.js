@@ -71,15 +71,15 @@ treeInsert(11, customTree);
 // console.log(customTree);
 // console.log(prettyPrint(customTree));
 
-function findClosestValue(treeObjSearch, first = false) {
-  if (treeObjSearch.left == null && first) {
-    return treeObjSearch.data;
-  } else if (treeObjSearch.right == null) {
-    return findClosestValue(treeObjSearch.left, true);
-  } else if (treeObjSearch.right && !first) {
-    return findClosestValue(treeObjSearch.right, true);
-  } else if (treeObjSearch.left) {
-    return findClosestValue(treeObjSearch.left, true);
+function findClosestValue(treeObj, first = false) {
+  if (treeObj.left == null && first) {
+    return treeObj.data;
+  } else if (treeObj.right == null) {
+    return findClosestValue(treeObj.left, true);
+  } else if (treeObj.right && !first) {
+    return findClosestValue(treeObj.right, true);
+  } else if (treeObj.left) {
+    return findClosestValue(treeObj.left, true);
   }
 }
 
@@ -144,10 +144,98 @@ function treeRemove(removedItem, treeObj, parent = null) {
 }
 
 let customArray2 = Tree([0, 11, 5, 3, 5, 2, 1, 7, 9, 10, 50, 30]);
+
+//Write a find(value) function that returns the node with the given value.
+function find(value, treeObj) {
+  if (!treeObj) {
+    console.log("value not found");
+    return null;
+  }
+
+  if (value === treeObj.data) {
+    return treeObj;
+  } else if (value > treeObj.data) {
+    return find(value, treeObj.right);
+  } else {
+    return find(value, treeObj.left);
+  }
+}
+
+function levelOrder(treeObj, callback = null, arr = []) {
+  if (!treeObj) {
+    return arr;
+  }
+
+  if (callback) {
+    callback(treeObj.data);
+  } else {
+    arr.push(treeObj.data);
+  }
+
+  let queue = [treeObj.left, treeObj.right];
+
+  while (queue.length > 0) {
+    let currentNode = queue.shift();
+
+    if (currentNode) {
+      if (callback) {
+        callback(currentNode.data);
+      } else {
+        arr.push(currentNode.data);
+      }
+      queue.push(currentNode.left, currentNode.right);
+    }
+  }
+
+  return arr;
+}
+
+function inOrder(root, arr = []) {
+  if (root === null) return arr;
+
+  if (root.left) preOrder(root.left, arr);
+
+  arr.push(root.data);
+
+  if (root.right) preOrder(root.right, arr);
+
+  return arr;
+}
+
+function preOrder(root, arr = []) {
+  if (root === null) return arr;
+
+  arr.push(root.data);
+
+  if (root.left) preOrder(root.left, arr);
+
+  if (root.right) preOrder(root.right, arr);
+
+  return arr;
+}
+
+function postOrder(root, arr = []) {
+  if (root === null) return arr;
+
+  if (root.left) postOrder(root.left, arr);
+
+  if (root.right) postOrder(root.right, arr);
+
+  arr.push(root.data);
+
+  return arr;
+}
+
+function height(root) {
+  if (root === null) return -1;
+
+  let leftHeight = height(root.left);
+
+  let rightHeight = height(root.right);
+
+  return Math.max(leftHeight, rightHeight) + 1;
+}
+
 console.log(prettyPrint(customArray2));
-treeRemove(0, customArray2);
-console.log(prettyPrint(customArray2));
-treeRemove(5, customArray2);
-console.log(prettyPrint(customArray2));
-treeRemove(11, customArray2);
-console.log(prettyPrint(customArray2));
+console.log(levelOrder(customArray2, null));
+console.log(height(customArray2));
