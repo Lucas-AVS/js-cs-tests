@@ -264,6 +264,11 @@ function isBalanced(root) {
   }
 }
 
+function rebalance(root) {
+  let sortedArr = inOrder(root);
+  return buildTree(sortedArr);
+}
+
 console.log(prettyPrint(customArray2));
 console.log(levelOrder(customArray2, null));
 console.log(isBalanced(customArray2));
