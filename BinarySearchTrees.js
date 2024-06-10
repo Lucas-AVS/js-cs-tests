@@ -251,6 +251,19 @@ function depth(node, root, count = 0) {
   }
 }
 
+function isBalanced(root) {
+  if (root === null) return true;
+
+  let leftHeight = height(root.left);
+  let rightHeight = height(root.right);
+
+  if (Math.abs(leftHeight - rightHeight) > 1) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 console.log(prettyPrint(customArray2));
 console.log(levelOrder(customArray2, null));
-console.log(depth(1, customArray2));
+console.log(isBalanced(customArray2));
